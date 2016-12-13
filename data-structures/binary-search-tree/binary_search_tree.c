@@ -98,6 +98,50 @@ int maxDepth(struct node* node) {
 	}
 }
 
+/*
+	Given a non-empty BST, return the minimum data value found in that
+	tree.
+*/
+int minValue(struct node* node) {
+	struct node* current = node;
+	//loop to find the left most node
+	while (current->left != NULL) {
+		current = current->left;
+	}
+
+	return(current->data);
+}
+
+/*
+	Given a BST, print out its data elements in increasing sorted order
+*/
+void printTree(struct node* node) {
+	if (node == NULL) {
+		return;
+	} else {
+		printTree(node->left);
+		printf("%d ", node->data);
+		printTree(node->right);
+	}
+}
+
+/*
+	Given a BST, print its nodes according to the "bottom-up" postorder
+	traversal
+*/
+void printPostOrder(struct node* node) {
+	if (node == NULL) {
+		return;
+	} else {
+		// Recurse on both subtrees
+		printTree(node->left);
+		printTree(node->right);
+
+		// Deal with the actual node
+		printf("%d ", node->data);
+	}
+}
+
 struct node* build123() {
 	struct node* root = NULL;
 	root = insert(root, 2);
@@ -122,5 +166,12 @@ int main() {
 	}
 	printf("The size of this BST is: %d\n", size(a));
 	printf("The max depth of this BST is: %d\n", maxDepth(a));
+	printf("The minimum data value that exists in this tree is: %d\n", minValue(a));
+
+	printf("\nNormal, increasing order printout:\n");
+	printTree(a);
+	printf("\n\nPost-Order printout:\n");
+	printPostOrder(a);
+	printf("\n");
 	return 0;
 }
