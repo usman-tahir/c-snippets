@@ -65,6 +65,39 @@ struct node* insert(struct node* node, int data) {
 	return(node);
 }
 
+/*
+	Compute the size of a given BST (count the number of nodes, including
+	the root)
+*/
+int size(struct node* node) {
+	if (node == NULL) {
+		return 0;
+	} else {
+		return(size(node->left) + 1 + size(node->right));
+	}
+}
+
+/*
+	Compute the max depth of a tree - the number of nodes along the longest
+	path from the root node down to the farthest leaf node
+*/
+int maxDepth(struct node* node) {
+	if (node == NULL) {
+		return(0);
+	} else {
+		// Compute the depth of each subtree
+		int leftDepth = maxDepth(node->left);
+		int rightDepth = maxDepth(node->right);
+
+		// Return the larger of the two depths
+		if (leftDepth > rightDepth) {
+			return(leftDepth + 1);
+		} else {
+			return (rightDepth + 1);
+		}
+	}
+}
+
 struct node* build123() {
 	struct node* root = NULL;
 	root = insert(root, 2);
@@ -87,5 +120,7 @@ int main() {
 	} else {
 		printf("%d is not in the BST\n", search);
 	}
+	printf("The size of this BST is: %d\n", size(a));
+	printf("The max depth of this BST is: %d\n", maxDepth(a));
 	return 0;
 }
